@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CardioGuardian — Cell-free RNA for cardiovascular risk</title>
+<meta name="description" content="CardioGuardian is developing a patent-pending blood test that measures cell-free RNA from genetically regulated risk genes to detect cardiovascular disease that clinical risk scores miss.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231c1416'/%3E%3Cpath d='M4 17h6l2-5 3 11 3-15 2 9h8' fill='none' stroke='%23e0473c' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f4efe6; --paper-2:#ebe4d7; --ink:#1c1416; --ink-2:#4a3f41; --muted:#7a6d6e;
+    --red:#b8281f; --red-2:#e0473c; --rose:#f1d9d3; --line:#d8cfc1;
+    --serif:"Fraunces", Georgia, serif; --sans:"Instrument Sans", "Helvetica Neue", sans-serif; --mono:"IBM Plex Mono", ui-monospace, monospace;
+    --wrap:1160px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;opacity:.35;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+  a{color:inherit}
+  .wrap{max-width:var(--wrap);margin:0 auto;padding:0 28px}
+  .mono{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+
+  /* nav */
+  nav{position:sticky;top:0;z-index:40;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--serif);font-size:21px;font-weight:600;letter-spacing:-.01em}
+  .brand svg{width:28px;height:28px}
+  .links{display:flex;gap:28px;align-items:center}
+  .links a{text-decoration:none;font-size:14px;color:var(--ink-2)}
+  .links a:hover{color:var(--red)}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;border-radius:999px;background:var(--ink);color:var(--paper)!important;text-decoration:none;font-size:14px;font-weight:500;transition:background .2s, transform .2s}
+  .btn:hover{background:var(--red);transform:translateY(-1px)}
+  .btn.ghost{background:transparent;color:var(--ink)!important;border:1px solid var(--ink)}
+  .btn.ghost:hover{background:var(--ink);color:var(--paper)!important}
+
+  /* hero */
+  .hero{padding:84px 0 40px;position:relative}
+  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+  .eyebrow{color:var(--red);display:flex;align-items:center;gap:10px;margin-bottom:22px}
+  .eyebrow::before{content:"";width:28px;height:1px;background:var(--red)}
+  h1{font-family:var(--serif);font-weight:300;font-size:clamp(44px,6.4vw,84px);line-height:.98;letter-spacing:-.03em}
+  h1 em{font-style:italic;font-weight:400;color:var(--red)}
+  .lede{font-size:19px;color:var(--ink-2);max-width:520px;margin:28px 0 36px}
+  .cta{display:flex;gap:12px;flex-wrap:wrap}
+  .rise{opacity:0;transform:translateY(18px);animation:rise .9s cubic-bezier(.2,.7,.2,1) forwards}
+  .d1{animation-delay:.1s}.d2{animation-delay:.25s}.d3{animation-delay:.4s}.d4{animation-delay:.55s}
+  @keyframes rise{to{opacity:1;transform:none}}
+
+  /* specimen card */
+  .specimen{background:var(--ink);color:var(--paper);border-radius:22px;padding:26px 26px 22px;position:relative;box-shadow:0 30px 60px -30px rgba(28,20,22,.55);transform:rotate(1.2deg)}
+  .specimen .row{display:flex;justify-content:space-between;color:#b9aeae}
+  .specimen .row b{color:var(--paper);font-weight:500}
+  .trace{width:100%;height:150px;margin:18px 0 6px;display:block}
+  .trace path.ecg{fill:none;stroke:var(--red-2);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1400;stroke-dashoffset:1400;animation:draw 2.6s .5s ease-out forwards}
+  .trace path.ghost{fill:none;stroke:#3a2f31;stroke-width:1}
+  @keyframes draw{to{stroke-dashoffset:0}}
+  .bars{display:flex;align-items:flex-end;gap:5px;height:70px;margin-top:10px;border-top:1px dashed #3d3234;padding-top:10px}
+  .bars i{flex:1;background:linear-gradient(to top,var(--red),var(--red-2));border-radius:3px 3px 0 0;transform-origin:bottom;transform:scaleY(0);animation:grow .8s cubic-bezier(.2,.7,.2,1) forwards}
+  .bars i.dim{background:#4a3d3f}
+  @keyframes grow{to{transform:scaleY(1)}}
+  .specimen .cap{margin-top:12px;color:#8f8384;font-size:11px}
+  .seq{position:absolute;right:-14px;top:40px;writing-mode:vertical-rl;color:var(--muted);font-family:var(--mono);font-size:11px;letter-spacing:.3em}
+
+  /* sections */
+  section{padding:110px 0;position:relative}
+  .sec-head{display:grid;grid-template-columns:220px 1fr;gap:40px;margin-bottom:56px}
+  .sec-head .mono{color:var(--muted);padding-top:12px;border-top:1px solid var(--ink)}
+  h2{font-family:var(--serif);font-weight:300;font-size:clamp(34px,4.4vw,56px);line-height:1.04;letter-spacing:-.02em;max-width:820px}
+  h2 em{font-style:italic;color:var(--red)}
+  h3{font-family:var(--serif);font-weight:400;font-size:24px;line-height:1.2;letter-spacing:-.01em;margin-bottom:10px}
+  p.body{color:var(--ink-2)}
+
+  /* gap */
+  .gap-grid{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .gap-grid > div{padding:34px 30px 38px;border-right:1px solid var(--line)}
+  .gap-grid > div:last-child{border-right:0}
+  .gap-grid .mono{color:var(--red);display:block;margin-bottom:18px}
+  .gap-grid .miss{margin-top:16px;font-size:14px;color:var(--muted);font-style:italic;font-family:var(--serif)}
+  .answer{margin-top:44px;display:grid;grid-template-columns:220px 1fr;gap:40px;align-items:start}
+  .answer p{font-family:var(--serif);font-size:clamp(22px,2.4vw,30px);line-height:1.3;font-weight:300;letter-spacing:-.01em}
+  .answer p strong{font-weight:600;color:var(--red)}
+
+  /* how */
+  .how{background:var(--ink);color:var(--paper)}
+  .how .sec-head .mono{color:#a99d9e;border-color:#5a4c4e}
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;counter-reset:s}
+  .step{background:#261c1e;border:1px solid #3a2e30;border-radius:18px;padding:30px 28px 32px;position:relative;overflow:hidden}
+  .step .n{font-family:var(--serif);font-size:72px;font-weight:300;line-height:1;color:var(--red-2);opacity:.9}
+  .step h3{margin-top:18px}
+  .step p{color:#c9bfbf;font-size:15.5px}
+  .step .tag{margin-top:22px;display:inline-block;color:#a99d9e;border:1px solid #4a3d3f;border-radius:999px;padding:5px 12px}
+  .formula{margin-top:44px;padding:26px 30px;border:1px dashed #5a4c4e;border-radius:16px;display:flex;flex-wrap:wrap;gap:16px 40px;align-items:center;justify-content:space-between}
+  .formula .eq{font-family:var(--serif);font-size:clamp(20px,2.6vw,30px);font-style:italic;font-weight:300}
+  .formula .eq b{color:var(--red-2);font-weight:400}
+  .formula .mono{color:#a99d9e;max-width:420px;text-transform:none;letter-spacing:.02em;font-size:13px}
+
+  /* evidence */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--ink)}
+  .stat{padding:30px 24px 34px 0;border-right:1px solid var(--line);padding-left:24px}
+  .stat:first-child{padding-left:0}
+  .stat:last-child{border-right:0}
+  .stat .num{font-family:var(--serif);font-size:clamp(46px,5.4vw,72px);font-weight:300;line-height:1;letter-spacing:-.03em}
+  .stat .num small{font-size:.4em;color:var(--red);margin-left:4px}
+  .stat p{margin-top:12px;font-size:15px;color:var(--ink-2)}
+  .findings{margin-top:60px;display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .finding{background:var(--paper-2);border-radius:18px;padding:28px}
+  .finding .mono{color:var(--red);margin-bottom:14px;display:block}
+  .finding p{font-size:15.5px;color:var(--ink-2)}
+  .note{margin-top:30px;font-size:13px;color:var(--muted);max-width:760px}
+
+  /* partners */
+  .partner-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+  .offer{list-style:none;border-top:1px solid var(--ink)}
+  .offer li{display:grid;grid-template-columns:44px 1fr;gap:12px;padding:20px 0;border-bottom:1px solid var(--line)}
+  .offer li .mono{color:var(--red);padding-top:4px}
+  .offer li b{display:block;font-weight:600;margin-bottom:2px}
+  .offer li span{color:var(--ink-2);font-size:15.5px}
+  .who{background:var(--rose);border-radius:22px;padding:36px}
+  .who h3{font-size:28px}
+  .who ul{list-style:none;margin:20px 0 28px}
+  .who li{padding:10px 0;border-bottom:1px solid rgba(184,40,31,.2);font-size:15.5px;display:flex;gap:12px}
+  .who li::before{content:"→";color:var(--red)}
+
+  /* team */
+  .team{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+  .person{border-top:1px solid var(--ink);padding-top:22px}
+  .avatar{width:64px;height:64px;border-radius:50%;background:var(--ink);color:var(--paper);display:grid;place-items:center;font-family:var(--serif);font-size:22px;margin-bottom:18px;position:relative}
+  .avatar::after{content:"";position:absolute;inset:-5px;border-radius:50%;border:1px solid var(--red);opacity:.5}
+  .person .role{color:var(--red);margin:4px 0 12px;display:block}
+  .person p{font-size:15px;color:var(--ink-2)}
+
+  /* contact */
+  .contact{background:var(--red);color:var(--paper);border-radius:28px;padding:72px 56px;display:grid;grid-template-columns:1.3fr 1fr;gap:40px;align-items:end;position:relative;overflow:hidden}
+  .contact h2{color:var(--paper)}
+  .contact h2 em{color:var(--ink)}
+  .contact .btn{background:var(--paper);color:var(--ink)!important}
+  .contact .btn:hover{background:var(--ink);color:var(--paper)!important}
+  .contact p{color:#f6dcd8;margin-bottom:24px}
+  .contact svg{position:absolute;right:-40px;top:-30px;width:520px;opacity:.18}
+
+  footer{padding:56px 0 48px;color:var(--muted);font-size:13px}
+  footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:28px}
+  footer .disc{max-width:640px}
+
+  /* reveal on scroll */
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .9s ease, transform .9s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+
+  @media (max-width:960px){
+    .hero-grid,.partner-grid,.contact{grid-template-columns:1fr}
+    .sec-head,.answer{grid-template-columns:1fr;gap:18px}
+    .gap-grid,.steps,.findings{grid-template-columns:1fr}
+    .gap-grid > div{border-right:0;border-bottom:1px solid var(--line)}
+    .stats{grid-template-columns:1fr 1fr}
+    .stat{padding-left:0!important;border-right:0;border-bottom:1px solid var(--line)}
+    .team{grid-template-columns:1fr 1fr}
+    .links a:not(.btn){display:none}
+    .specimen{transform:none}
+    .seq{display:none}
+  }
+  @media (max-width:560px){
+    .wrap{padding:0 16px}
+    section{padding:80px 0}
+    .team,.stats{grid-template-columns:1fr}
+    .contact{padding:48px 24px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important}
+    .rise,.reveal{opacity:1;transform:none}
+    .trace path.ecg{stroke-dashoffset:0}
+    .bars i{transform:none}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="CardioGuardian home">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#1c1416"/><path d="M4 17h6l2-5 3 11 3-15 2 9h8" fill="none" stroke="#e0473c" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      CardioGuardian
+    </a>
+    <div class="links">
+      <a href="#science">Science</a>
+      <a href="#evidence">Evidence</a>
+      <a href="#partners">For labs</a>
+      <a href="#team">Team</a>
+      <a class="btn" href="#contact">Get in touch</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow mono rise">Cell-free RNA · Cardiovascular disease</div>
+      <h1 class="rise d1">Your genes set the risk.<br>Your blood shows <em>which ones are active.</em></h1>
+      <p class="lede rise d2">CardioGuardian is developing a patent-pending blood test that measures cell-free RNA from genetically regulated risk genes, to detect cardiovascular disease that clinical risk scores miss.</p>
+      <div class="cta rise d3">
+        <a class="btn" href="#partners">Partner with us</a>
+        <a class="btn ghost" href="#science">How it works</a>
+      </div>
+    </div>
+
+    <div class="rise d4" style="position:relative">
+      <div class="specimen" role="img" aria-label="Illustration: a heartbeat trace above bars representing cell-free RNA expression of risk genes">
+        <div class="row mono"><span>Specimen</span><b>Plasma · 1 draw</b></div>
+        <div class="row mono" style="margin-top:6px"><span>Analyte</span><b>cfRNA</b></div>
+        <svg class="trace" viewBox="0 0 500 150" preserveAspectRatio="none" aria-hidden="true">
+          <path class="ghost" d="M0 75H500M0 37H500M0 113H500"/>
+          <path class="ecg" d="M0 85 L60 85 L72 78 L84 85 L120 85 L130 95 L142 20 L154 132 L164 85 L200 85 L216 70 L236 85 L300 85 L310 95 L322 14 L334 138 L344 85 L380 85 L396 68 L416 85 L500 85"/>
+        </svg>
+        <div class="bars" aria-hidden="true">
+          <i style="height:40%;animation-delay:1.6s" class="dim"></i><i style="height:72%;animation-delay:1.66s"></i><i style="height:28%;animation-delay:1.72s" class="dim"></i><i style="height:88%;animation-delay:1.78s"></i><i style="height:52%;animation-delay:1.84s" class="dim"></i><i style="height:64%;animation-delay:1.9s"></i><i style="height:34%;animation-delay:1.96s" class="dim"></i><i style="height:95%;animation-delay:2.02s"></i><i style="height:46%;animation-delay:2.08s" class="dim"></i><i style="height:58%;animation-delay:2.14s"></i><i style="height:22%;animation-delay:2.2s" class="dim"></i><i style="height:80%;animation-delay:2.26s"></i><i style="height:38%;animation-delay:2.32s" class="dim"></i><i style="height:68%;animation-delay:2.38s"></i>
+        </div>
+        <div class="cap mono">Illustrative · Risk-gene expression weighted by genetic effect</div>
+      </div>
+      <div class="seq">GWAS → eQTL → cfRNA</div>
+    </div>
+  </div>
+</header>
+
+<section id="problem">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="mono">01 — The gap</div>
+      <h2>Cardiovascular disease is the leading cause of death, and today's risk tools still <em>miss people.</em></h2>
+    </div>
+    <div class="gap-grid reveal">
+      <div>
+        <span class="mono">Clinical calculators</span>
+        <h3>Age, cholesterol, blood pressure</h3>
+        <p class="body">Equations such as PREVENT estimate risk from a handful of clinical factors.</p>
+        <p class="miss">Many patients with disease are rated low or borderline risk.</p>
+      </div>
+      <div>
+        <span class="mono">Polygenic scores</span>
+        <h3>Inherited DNA variants</h3>
+        <p class="body">They capture genetics, but they are fixed at birth and were built mostly in European-ancestry cohorts.</p>
+        <p class="miss">They can't tell whether risk genes are actually active.</p>
+      </div>
+      <div>
+        <span class="mono">Imaging</span>
+        <h3>Calcium scans and angiography</h3>
+        <p class="body">Imaging shows plaque directly, but it requires a separate visit and radiation exposure.</p>
+        <p class="miss">It sees disease once structure has changed.</p>
+      </div>
+    </div>
+    <div class="answer reveal">
+      <div class="mono" style="color:var(--muted);padding-top:10px">Our approach</div>
+      <p>CardioGuardian reads the <strong>activity</strong> of the genes that drive inherited cardiovascular risk, from a single routine blood draw.</p>
+    </div>
+  </div>
+</section>
+
+<section class="how" id="science">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="mono">02 — The science</div>
+      <h2>Genetics chooses the genes. <em>Cell-free RNA</em> measures them.</h2>
+    </div>
+    <div class="steps">
+      <div class="step reveal">
+        <div class="n">1</div>
+        <h3>Find the genes that matter</h3>
+        <p>We link cardiovascular GWAS risk variants to the genes they regulate in artery tissue, using a regulatory trait concordance method applied to GTEx eQTL data across 44 tissues.</p>
+        <span class="tag mono">GWAS × eQTL</span>
+      </div>
+      <div class="step reveal">
+        <div class="n">2</div>
+        <h3>Measure them in blood</h3>
+        <p>Cells in the artery wall and immune system shed RNA into the bloodstream. From one plasma sample, we sequence the cell-free RNA of those risk genes.</p>
+        <span class="tag mono">Plasma cfRNA</span>
+      </div>
+      <div class="step reveal">
+        <div class="n">3</div>
+        <h3>Score the risk</h3>
+        <p>Each gene's expression is weighted by its genetic effect, producing a single CardioGuardian score designed to complement clinical risk equations.</p>
+        <span class="tag mono">One score</span>
+      </div>
+    </div>
+    <div class="formula reveal">
+      <div class="eq">score = Σ <b>expression</b> × <b>genetic effect</b></div>
+      <div class="mono">Genetically informed, expression-based, and measured from a routine blood draw.</div>
+    </div>
+  </div>
+</section>
+
+<section id="evidence">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="mono">03 — Evidence</div>
+      <h2>Tested in a diverse clinical cohort, <em>confirmed in artery tissue.</em></h2>
+    </div>
+    <div class="stats reveal">
+      <div class="stat"><div class="num">125</div><p>Patients profiled by plasma cell-free RNA in our training cohort</p></div>
+      <div class="stat"><div class="num">39<small>%</small></div><p>Of the cohort from non-European ancestry</p></div>
+      <div class="stat"><div class="num">41</div><p>Carotid artery biopsies in an independent validation set</p></div>
+      <div class="stat"><div class="num">44</div><p>Tissues analyzed to select genetically regulated risk genes</p></div>
+    </div>
+    <div class="findings">
+      <div class="finding reveal"><span class="mono">Finding 01</span><p>The CardioGuardian score was significantly higher in patients with cardiovascular disease than in those without.</p></div>
+      <div class="finding reveal"><span class="mono">Finding 02</span><p>It outperformed a polygenic risk score in the same cohort and added information beyond the PREVENT clinical risk score.</p></div>
+      <div class="finding reveal"><span class="mono">Finding 03</span><p>It flagged patients with disease even when their clinical risk was rated low or borderline.</p></div>
+    </div>
+    <p class="note reveal">Results from a cross-sectional cohort; manuscript currently in peer review. CardioGuardian is an investigational research assay. It has not been cleared or approved by the U.S. FDA and is not available for clinical use.</p>
+  </div>
+</section>
+
+<section id="partners" style="padding-top:40px">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="mono">04 — For clinical labs</div>
+      <h2>A differentiated cardiology test that runs on <em>the sequencers you already own.</em></h2>
+    </div>
+    <div class="partner-grid">
+      <ul class="offer reveal">
+        <li><span class="mono">A</span><div><b>Locked gene panel</b><span>A defined set of genetically regulated risk genes, with a compact panel designed for lab transfer.</span></div></li>
+        <li><span class="mono">B</span><div><b>Lab protocol</b><span>Sample collection, cfRNA processing, and library preparation standards for consistent results.</span></div></li>
+        <li><span class="mono">C</span><div><b>Scoring software</b><span>Our algorithm turns sequencing output into a CardioGuardian score and report.</span></div></li>
+        <li><span class="mono">D</span><div><b>Evidence and support</b><span>Validation data, scientific support, and collaboration on clinical-utility studies.</span></div></li>
+      </ul>
+      <div class="who reveal">
+        <h3>Who we work with</h3>
+        <ul>
+          <li>Reference and specialty clinical labs</li>
+          <li>Cardiometabolic and preventive-cardiology lab services</li>
+          <li>Pharma teams running cardiovascular prevention trials</li>
+          <li>Research collaborators with banked plasma and outcomes</li>
+        </ul>
+        <a class="btn" href="#contact">Discuss a partnership</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="team" style="padding-top:40px">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="mono">05 — Team</div>
+      <h2>Genetics, assay science, and clinical medicine, <em>under one roof.</em></h2>
+    </div>
+    <div class="team">
+      <div class="person reveal">
+        <div class="avatar">BS</div>
+        <h3>Brian Su, PhD</h3>
+        <span class="role mono">Co-founder · CEO</span>
+        <p>Built the CardioGuardian cfRNA assay and model. Previously developed a colorectal cancer NGS assay now commercialized as ColonAiQ and managed companion-diagnostic partnerships at Hengrui Pharmaceutical.</p>
+      </div>
+      <div class="person reveal">
+        <div class="avatar">MB</div>
+        <h3>Michael Binkley, MD</h3>
+        <span class="role mono">Co-founder · Scientific founder</span>
+        <p>Physician-scientist in Radiation Oncology at Stanford, leading research on liquid biopsy and the long-term cardiovascular effects of cancer therapy.</p>
+      </div>
+      <div class="person reveal">
+        <div class="avatar">AS</div>
+        <h3>Ajay Subramanian</h3>
+        <span class="role mono">Co-founder · Data science</span>
+        <p>Co-led the genetic and clinical analyses behind CardioGuardian, including benchmarking against polygenic and clinical risk scores and tissue validation.</p>
+      </div>
+      <div class="person reveal">
+        <div class="avatar">RK</div>
+        <h3>Ryosuke Kita</h3>
+        <span class="role mono">Co-founder · Genetic algorithms</span>
+        <p>Developed the regulatory trait concordance pipeline that links disease-risk variants to the genes they regulate in specific tissues.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:20px">
+  <div class="wrap">
+    <div class="contact reveal" id="contact">
+      <svg viewBox="0 0 500 150" aria-hidden="true"><path d="M0 85 L60 85 L72 78 L84 85 L120 85 L130 95 L142 20 L154 132 L164 85 L200 85 L216 70 L236 85 L300 85 L310 95 L322 14 L334 138 L344 85 L500 85" fill="none" stroke="#fff" stroke-width="3"/></svg>
+      <h2>Let's find the people <em>clinical risk scores miss.</em></h2>
+      <div>
+        <p>We're speaking with clinical labs, cardiologists, research collaborators, and investors. We'd love to hear from you.</p>
+        <a class="btn" href="mailto:ssu42@stanford.edu?subject=CardioGuardian">Email the team</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>© 2026 CardioGuardian · Patent pending</div>
+    <div class="disc">CardioGuardian is an investigational research assay and is not available for clinical use. Nothing on this site is medical advice.</div>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var els=document.querySelectorAll('.reveal');
+    if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in')});return;}
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target);} });
+    },{threshold:.12,rootMargin:'0px 0px -40px 0px'});
+    els.forEach(function(e,i){ e.style.transitionDelay=((i%4)*80)+'ms'; io.observe(e); });
+  })();
+</script>
+</body>
+</html>
