@@ -127,7 +127,10 @@
   .who li::before{content:"→";color:var(--red)}
 
   /* team */
-  .team{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+  .team{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .advisors-head{margin:64px 0 26px;color:var(--muted)}
+  .team.advisors{grid-template-columns:repeat(2,1fr)}
+  .team.advisors .avatar{background:var(--paper);color:var(--ink);border:1px solid var(--ink)}
   .person{border-top:1px solid var(--ink);padding-top:22px}
   .avatar{width:64px;height:64px;border-radius:50%;background:var(--ink);color:var(--paper);display:grid;place-items:center;font-family:var(--serif);font-size:22px;margin-bottom:18px;position:relative}
   .avatar::after{content:"";position:absolute;inset:-5px;border-radius:50%;border:1px solid var(--red);opacity:.5}
@@ -158,7 +161,7 @@
     .gap-grid > div{border-right:0;border-bottom:1px solid var(--line)}
     .stats{grid-template-columns:1fr 1fr}
     .stat{padding-left:0!important;border-right:0;border-bottom:1px solid var(--line)}
-    .team{grid-template-columns:1fr 1fr}
+    .team,.team.advisors{grid-template-columns:1fr 1fr}
     .links a:not(.btn){display:none}
     .specimen{transform:none}
     .seq{display:none}
@@ -166,7 +169,7 @@
   @media (max-width:560px){
     .wrap{padding:0 16px}
     section{padding:80px 0}
-    .team,.stats{grid-template-columns:1fr}
+    .team,.team.advisors,.stats{grid-template-columns:1fr}
     .contact{padding:48px 24px}
   }
   @media (prefers-reduced-motion:reduce){
@@ -363,14 +366,23 @@
       <div class="person reveal">
         <div class="avatar">AS</div>
         <h3>Ajay Subramanian</h3>
-        <span class="role mono">Co-founder · Bioinformatics</span>
+        <span class="role mono">Co-founder · CTO</span>
         <p>Bioinformatician who co-led the genetic and clinical analyses behind CardioGuardian, including benchmarking against polygenic and clinical risk scores and tissue validation.</p>
       </div>
+    </div>
+    <div class="mono advisors-head reveal">Scientific advisors</div>
+    <div class="team advisors">
       <div class="person reveal">
         <div class="avatar">RK</div>
         <h3>Ryosuke Kita</h3>
-        <span class="role mono">Co-founder · Genetic algorithms</span>
-        <p>Developed the regulatory trait concordance algorithms that link disease-risk variants to the genes they regulate in specific tissues, and co-developed the CardioGuardian scoring model.</p>
+        <span class="role mono">Scientific advisor</span>
+        <p>Head of AI Product at Noetik. Developed the regulatory trait concordance algorithms that link disease-risk variants to the genes they regulate in specific tissues, and co-developed the CardioGuardian scoring model.</p>
+      </div>
+      <div class="person reveal">
+        <div class="avatar">DC</div>
+        <h3>Daniel Clark, MD</h3>
+        <span class="role mono">Scientific advisor</span>
+        <p>Associate Professor at Stanford University School of Medicine, with appointments in Cardiovascular Medicine and Pediatric Cardiology. Co-author of the CardioGuardian study.</p>
       </div>
     </div>
   </div>
